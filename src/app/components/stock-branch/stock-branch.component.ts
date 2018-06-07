@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-stock-branch',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stock-branch.component.scss']
 })
 export class StockBranchComponent implements OnInit {
-
+  @Input() parent: FormGroup;
   constructor() { }
 
   ngOnInit() {

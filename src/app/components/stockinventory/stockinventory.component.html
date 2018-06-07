@@ -1,20 +1,17 @@
 <div class="stock-inventory">
 
-  <stock-branch></stock-branch>
-  <stock-selector></stock-selector>
-  <stock-product></stock-product>
+
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div formGroupName="store">
-      <input type="text" placeholder="Branch Id" formControlName="branch">
-      <input type="text" placeholder="Manager Code" formControlName="code">
-    </div>
-    <div class="stock-inventory-buttons">
-      <button type="submit" [disabled]="form.invalid">
-        Order Stock
-      </button>
-    </div>
+      <app-stock-branch [parent]="form"></app-stock-branch>
+      <app-stock-selector [parent]="form"></app-stock-selector>
+      <app-stock-products [parent]="form"></app-stock-products>
 
+      <div class="stock-inventory-buttons">
+          <button type="submit" [disabled]="form.invalid">
+            Order Stock
+          </button>
+        </div>
     <pre>{{ form.value | json }}</pre>
 
   </form>
