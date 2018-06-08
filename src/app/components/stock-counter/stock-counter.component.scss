@@ -19,3 +19,17 @@ p {
     text-align: center;
     width: 50px;
 }
+
+button {
+    padding: 3px;
+    border-radius: 0;
+    line-height: 1;
+    padding: 3px 7px;
+    background: pink;
+    color: white;
+    font-weight: 500;
+    &:disabled {
+        background: rgba(0,0,0,0.01);
+        color: rgba(0,0,0,0.04);
+    }
+}
