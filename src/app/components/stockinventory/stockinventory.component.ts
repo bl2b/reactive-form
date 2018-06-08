@@ -17,6 +17,7 @@ export class StockinventoryComponent implements OnInit {
 
   products: Product[];
   productMap: Map<number, Product>;
+  total: number;
 
 
   ngOnInit() {
@@ -33,14 +34,27 @@ export class StockinventoryComponent implements OnInit {
     const products = this._svc.getProducts();
 
     Observable
-    .forkJoin(cart, products)
-    .subscribe(([cart, products]) => {
-       const myMap = products.map<[number, Product]>(product => [product.id, product])       
-       this.productMap = new Map<number, Product>(myMap);
-       //{ 1, {}}
-       this.products = products;
-       cart.forEach(item => this.addStock(item));
-    });
+      .forkJoin(cart, products)
+      .subscribe(([cart, products]) => {
+        const myMap = products.map<[number, Product]>(product => [product.id, product])
+        this.productMap = new Map<number, Product>(myMap);
+        //{ 1, {}}
+        this.products = products;
+        cart.forEach(item => this.addStock(item));
+
+        this.calculateTotal(this.form.get('stock').value);
+        this.form.get('stock').valueChanges.subscribe((val) => {
+          this.calculateTotal(val);
+        });
+      });
+  }
+
+  calculateTotal(value: Item[]) {
+    const total = value.reduce((prev, next) => {
+      return prev + (next.quantity * this.productMap.get(next.product_id).price);
+    }, 0)
+
+    this.total = total;
   }
 
   onSubmit(): void {
@@ -59,7 +73,8 @@ export class StockinventoryComponent implements OnInit {
   }
 
   removeStock(group: FormGroup, index: number): void {
-    console.log(group, index);
     const control = this.form.get('stock') as FormArray;
+    control.removeAt(index);
   }
+  
 }

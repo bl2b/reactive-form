@@ -1,0 +1,21 @@
+.stock-counter {
+    background: rgba(0,0,0,0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    & > div > div {
+        display: flex;
+        align-items: center;
+
+        & > div {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+p {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    width: 50px;
+}

@@ -9,6 +9,10 @@
 
       <app-stock-products [parent]="form" (removed)="removeStock($event)" [map]="productMap"></app-stock-products>
 
+      <div>
+        Total: {{ total | currency: 'USD': true }}
+      </div>
+
       <div class="stock-inventory-buttons">
           <button type="submit" [disabled]="form.invalid">
             Order Stock
