@@ -4,8 +4,10 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <app-stock-branch [parent]="form"></app-stock-branch>
-      <app-stock-selector [parent]="form"></app-stock-selector>
-      <app-stock-products [parent]="form"></app-stock-products>
+
+      <app-stock-selector [parent]="form" [products]="products" (added)="addStock($event)"></app-stock-selector>
+
+      <app-stock-products [parent]="form" (removed)="removeStock($event)" [map]="productMap"></app-stock-products>
 
       <div class="stock-inventory-buttons">
           <button type="submit" [disabled]="form.invalid">
