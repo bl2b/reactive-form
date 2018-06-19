@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { Product } from '../_shared/models/product.interface';
 import { Item } from '../_shared/models/item.interface';
+import { retry } from 'rxjs/operator/retry';
 
 
 @Injectable()
@@ -33,4 +34,12 @@ export class StockinventoryService {
       catchError((error: any) => Observable.throw(error.json()))
     );
   }
+
+  // checkBranchId(id: string): Observable<boolean> {
+  //   let search = new URLSearchParams();
+  //   search.set('id', id);
+  //   return this._http.get('/api/branches',  search)
+  //   .map(res => res.json());
+  //   .map((res: any[]) => !!res.length);
+  // }
 }

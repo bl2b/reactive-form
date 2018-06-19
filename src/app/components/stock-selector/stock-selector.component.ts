@@ -24,4 +24,12 @@ export class StockSelectorComponent implements OnInit {
       quantity: 10
     });
   }
+
+  get stockExists() {
+    return this.parent.hasError('stockExists') && this.parent.get('selector.product_id').dirty;
+  }
+
+  get notSelected() {
+    return !this.parent.get('selector.product_id').value;
+  }
 }

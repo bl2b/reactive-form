@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Product } from '../../_shared/models/product.interface';
 import { StockinventoryService } from '../../services/stockinventory.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import { Item } from '../../_shared/models/item.interface';
+import { StockValidators } from './stockinventory.validators';
 
 @Component({
   selector: 'app-stockinventory',
@@ -23,12 +24,12 @@ export class StockinventoryComponent implements OnInit {
   ngOnInit() {
     this.form = this._fb.group({
       store: this._fb.group({
-        branch: '',
-        code: ''
+        branch: ['', [Validators.required, StockValidators.checkBranch]], //, [this.validateBranch.bind(this)]
+        code: ['', Validators.required]
       }),
       selector: this.createStock({}),
       stock: this._fb.array([])
-    });
+    }, { validator : StockValidators.checkStockExists});
 
     const cart = this._svc.getCartItems();
     const products = this._svc.getProducts();
@@ -76,5 +77,10 @@ export class StockinventoryComponent implements OnInit {
     const control = this.form.get('stock') as FormArray;
     control.removeAt(index);
   }
+
+  // validateBranch(control: AbstractControl) {
+  //   return this._svc.checkBranchId(control.value)
+  //   .map(res => res ? null : {unknownBranch: true});
+  // }
   
 }
